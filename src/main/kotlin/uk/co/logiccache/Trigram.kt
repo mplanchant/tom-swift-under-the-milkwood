@@ -8,7 +8,7 @@ object Trigram {
         val map = mutableMapOf<Pair<String, String>, MutableSet<String>>()
         readFileAsText(from)
             .toWords()
-            .windowed(3, 1, false) {
+            .windowed(size = 3, step = 1, partialWindows = false) {
                 map.getOrPut(Pair(it[0], it[1])) { mutableSetOf() }.add(it[2])
             }
         val start = map.keys.random()
