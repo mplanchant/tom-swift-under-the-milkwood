@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.3.21"
-    id ("com.adarshr.test-logger") version ("1.6.0")
+    id("com.adarshr.test-logger") version ("1.6.0")
 }
 
 group = "uk.co.logiccache"
@@ -20,4 +20,10 @@ dependencies {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
+}
+
+tasks {
+    "test"(Test::class) {
+        useJUnitPlatform()
+    }
 }
