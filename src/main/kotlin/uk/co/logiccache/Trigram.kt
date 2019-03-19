@@ -5,7 +5,7 @@ import java.io.File
 object Trigram {
 
     fun generate(file: String, numberOfWords: Int = 100): String {
-        val map = extractWords(file)
+        val map = extractTrigrams(file)
         val start = map.keys.random()
         var nextWord = map[start]
         val generatedText = mutableListOf(start.first, start.second)
@@ -16,17 +16,17 @@ object Trigram {
         return generatedText.joinToString(separator = " ")
     }
 
-    private fun extractWords(file: String): MutableMap<Pair<String, String>, MutableSet<String>> {
-        val map = mutableMapOf<Pair<String, String>, MutableSet<String>>()
-        readFileAsText(file)
+    private fun extractTrigrams(file: String): MutableMap<Pair<String, String>, MutableSet<String>> {
+        val trigrams = mutableMapOf<Pair<String, String>, MutableSet<String>>()
+        readFileAsString(file)
             .toWords()
             .windowed(size = 3, step = 1, partialWindows = false) {
-                map.getOrPut(Pair(it[0], it[1])) { mutableSetOf() }.add(it[2])
+                trigrams.getOrPut(Pair(it[0], it[1])) { mutableSetOf() }.add(it[2])
             }
-        return map
+        return trigrams
     }
 
-    private fun readFileAsText(fileName: String): String =
+    private fun readFileAsString(fileName: String): String =
         File(ClassLoader.getSystemResource(fileName).file)
             .readText()
             .replace(Regex("[^a-zA-Z\\s]"), "")
