@@ -4,11 +4,11 @@ import java.io.File
 
 object Trigram {
 
-    fun generate(file: String, numberOfWords: Int = 100): String {
+    fun generate(file: String, maximumNumberOfWords: Int = 100): String {
         val trigrams = extractTrigrams(file)
         val randomTrigram = trigrams.entries.random()
         val generatedText = mutableListOf(randomTrigram.key.first, randomTrigram.key.second)
-        while (generatedText.size < numberOfWords) {
+        while (generatedText.size < maximumNumberOfWords) {
             val words = trigrams.getOrDefault(
                 Pair(generatedText[generatedText.size - 2], generatedText[generatedText.size - 1]),
                 setOf<String>()
