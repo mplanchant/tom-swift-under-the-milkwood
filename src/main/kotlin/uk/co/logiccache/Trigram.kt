@@ -4,14 +4,17 @@ import java.io.File
 
 object Trigram {
 
-    fun generate(file: String, numberOfWords: Int = 100): String {
-        val map = extractTrigrams(file)
-        val start = map.keys.random()
-        var nextWord = map[start]
-        val generatedText = mutableListOf(start.first, start.second)
-        while (nextWord != null && generatedText.size < numberOfWords) {
-            generatedText.add(nextWord.random())
-            nextWord = map[Pair(generatedText[generatedText.size - 2], generatedText[generatedText.size - 1])]
+    fun generate(file: String, numberOfWords: Int = 1000): String {
+        val trigrams = extractTrigrams(file)
+        val randomTrigram = trigrams.entries.random()
+        val generatedText = mutableListOf(randomTrigram.key.first, randomTrigram.key.second)
+        while (generatedText.size < numberOfWords) {
+            generatedText.add(
+                trigrams.getOrDefault(
+                    Pair(generatedText[generatedText.size - 2], generatedText[generatedText.size - 1]),
+                    setOf<String>()
+                ).random()
+            )
         }
         return generatedText.joinToString(separator = " ")
     }
