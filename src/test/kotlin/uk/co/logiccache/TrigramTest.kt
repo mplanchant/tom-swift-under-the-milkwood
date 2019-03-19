@@ -5,7 +5,7 @@ import io.kotlintest.specs.StringSpec
 
 internal class TrigramTest : StringSpec({
     "nothing to sum" {
-        val foo = Trigram.generate(file = "43-0.txt")
+        val foo = Trigram.generate(file = "43-1.txt")
         print(foo)
         foo shouldNotBe ""
     }
